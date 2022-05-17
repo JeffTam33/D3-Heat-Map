@@ -1,0 +1,40 @@
+//SCSS
+//Font Roboto Flex
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Lato&display=swap');
+
+body{
+  font-family:  Roboto Flex, monospace;
+}
+
+#main-wrapper {
+  background-color: #FFFFFF;
+  margin: auto;
+  margin-top: 100px;
+  width: 1200px;
+  height: 550px;
+  text-align: center;
+  #title{
+    font-family: Roboto Flex, monospace;
+    font-size: 40px;
+  }
+  #x-axis{
+    font-size: 16px;
+  }
+  #y-axis{
+    font-size: 16px;
+  }
+  #y-axis-title{
+    font-size: 25px;
+  }
+}
+
+.tooltips {
+  display: block;
+  position: absolute;
+  height: auto;
+  width: auto;
+  font-family: Roboto Flex, monospace;
+  font-size: 16px;
+  background-color: #96BBBB;
+  box-shadow: 1px 1px 5px;
+}
