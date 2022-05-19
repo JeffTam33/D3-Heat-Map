@@ -1,7 +1,7 @@
 //Babel
 //Libaries: D3
 //Data used from https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json
-const width = 1200
+const width = 1300
 const height = 600
 const padding = 125
 const barWidth = 18
@@ -35,7 +35,6 @@ var svgContainer = d3.select(".visual-data")
                      .append("svg")
                      .attr("width", width)
                      .attr("height", height)
-                     .style("background-color", "#FFFFFF")
 
 var heat = svgContainer.append("g")
                          .attr("id", "heat")
@@ -62,7 +61,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
                        .range([padding, width - padding])
       const yScale = d3.scaleLinear()
                        .domain([d3.max(monthArr), d3.min(monthArr)])
-                       .range([height - padding, padding])
+                       .range([height - padding, padding / 2])
       const legendScale = d3.scaleLinear()
                        .domain([d3.max(varianceArr) + data.baseTemperature, d3.min(varianceArr) + data.baseTemperature])
                        .range([height - padding, padding])
@@ -94,7 +93,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
       //Y-axis title and text
       svgContainer.append("text")
                   .attr("id", "y-axis-title")
-                  .attr("x", (height * -1) + padding * 2)
+                  .attr("x", (height * -1) + padding * 3)
                   .attr("y", padding / 3)
                   .attr("transform", "rotate(270)")
                   .text("Months")
@@ -115,8 +114,26 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
                   .attr("fill", d => sortVarianceByColor(data.baseTemperature + d.variance))
                   .attr("x", d => xScale(d.year))
                   .attr("y", d => yScale(d.month))
-                  .attr("height", "5px")  
-                  .attr("width", "5px")
+                  .attr("height", "21px")  
+                  .attr("width", "3px")
+                  .on("mouseover", function (event, d){
+                      var date = this.getAttribute("data-year") + "-" + monthStrArr[this.getAttribute("data-month") - 1]
+                      var temp = Math.round(this.getAttribute("data-temp") * 10) / 10 + "°C"
+                      tooltips.transition().duration(0);                             
+                      tooltips.style("height", 300)
+                              .style("width", 300)
+                              .attr("data-year", this.getAttribute("data-year"))
+                              .style("top", yScale(this.getAttribute("data-month")) + 100 + "px")
+                              .style("left", xScale(this.getAttribute("data-year")) + 100 + "px")
+                              .style("opacity", .9)
+                              .style("fill", "#358600")
+                              .style("transform", "translateX(100px)")
+                              .attr("id", "tooltip")
+                              .text(date + " " + temp)
+                  })
+                  .on("mouseout", function(){
+                    tooltips.transition().duration(100).style("opacity", 0)
+                  })
   //Legend color appear on axis
       legend.selectAll("#legend")
                   .data(colorHeatArr)
