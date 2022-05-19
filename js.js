@@ -109,11 +109,11 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
                   .append("rect")
                   .attr("class", "cell")
                   .attr("data-year", d => d.year)
-                  .attr("data-month", d=> d.month)
+                  .attr("data-month", d=> d.month - 1)
                   .attr("data-temp", d => d.variance + data.baseTemperature)
                   .attr("fill", d => sortVarianceByColor(data.baseTemperature + d.variance))
                   .attr("x", d => xScale(d.year))
-                  .attr("y", d => yScale(d.month))
+                  .attr("y", d => yScale(d.month) - 21)
                   .attr("height", "21px")  
                   .attr("width", "3px")
                   .on("mouseover", function (event, d){
